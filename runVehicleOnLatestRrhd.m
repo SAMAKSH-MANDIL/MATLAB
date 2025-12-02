@@ -1,4 +1,4 @@
-function runVehicleOnLatestRrhd(rrApp, rrProj, sceneName, scenarioName)
+function runVehicleOnLatestRrhd(rrProj, sceneName, scenarioName)
 % runVehicleOnLatestRrhd
 %   - Take latest RRHD from your stack
 %   - Import + build a RoadRunner scene from it
@@ -7,13 +7,11 @@ function runVehicleOnLatestRrhd(rrApp, rrProj, sceneName, scenarioName)
 %   - Create a route that exactly follows that lane geometry
 %   - Validate & simulate in RoadRunner Scenario
 %
-%   rrApp        : roadrunner object (your existing RRSession app)
 %   rrProj       : project folder (string)
 %   sceneName    : .rrscene filename to save (from this latest RRHD)
 %   scenarioName : .rrscenario filename to save & simulate
 
     arguments
-        rrApp
         rrProj       (1,1) string
         sceneName    (1,1) string
         scenarioName (1,1) string
@@ -57,9 +55,11 @@ function runVehicleOnLatestRrhd(rrApp, rrProj, sceneName, scenarioName)
     fprintf("Using lane ID '%s' with %d geometry points.\n", ...
         lane.ID, size(laneGeom,1));
 
-    %% 3) Import RRHD into RoadRunner & build scene
-    fprintf("Importing RRHD and building scene '%s'...\n", sceneName);
+    %% 3) Attach to RoadRunner, import RRHD & build scene
+    fprintf("Attaching to RoadRunner project: %s\n", rrProj);
+    rrApp = roadrunner(ProjectFolder=rrProj);
 
+    fprintf("Importing RRHD and building scene '%s'...\n", sceneName);
     importOpts = roadrunnerHDMapImportOptions(ImportStep="Load");
     importScene(rrApp, rrhdFull, "RoadRunner HD Map", importOpts);
 
@@ -110,7 +110,6 @@ function runVehicleOnLatestRrhd(rrApp, rrProj, sceneName, scenarioName)
     for i = 1:numel(segs)
         segs(i).Freeform = true;
     end
-    % NOTE: rrRoute.Segments is read-only; elements are handle objects.
 
     %% 7) Validate and simulate
     fprintf("Validating scenario...\n");

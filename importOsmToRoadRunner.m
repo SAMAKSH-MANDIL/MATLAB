@@ -30,7 +30,7 @@ function importOsmToRoadRunner(rrApp, rrProj, centerLat, centerLon, extentMeters
     fprintf("Downloading OSM from:\n%s\n", osmURL);
 
     osmFile = fullfile(tempdir, "roadrunner_osm_import.osm");
-    opts    = weboptions(ContentType="xml");
+    opts    = weboptions(ContentType="xml", Timeout=60);
 
     websave(osmFile, osmURL, opts);
     fprintf("Saved OSM to: %s\n", osmFile);
