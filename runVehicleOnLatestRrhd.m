@@ -57,7 +57,14 @@ function runVehicleOnLatestRrhd(rrProj, sceneName, scenarioName)
 
     %% 3) Attach to RoadRunner, import RRHD & build scene
     fprintf("Attaching to RoadRunner project: %s\n", rrProj);
-    rrApp = roadrunner(ProjectFolder=rrProj);
+    try
+        rrApp = roadrunner.connect();
+        fprintf("Connected to existing RoadRunner instance.\n");
+    catch
+        fprintf("No existing RoadRunner instance. Opening new one...\n");
+        rrApp = roadrunner(ProjectFolder=rrProj);
+    end
+
 
     fprintf("Importing RRHD and building scene '%s'...\n", sceneName);
     importOpts = roadrunnerHDMapImportOptions(ImportStep="Load");

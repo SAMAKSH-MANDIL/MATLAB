@@ -12,7 +12,7 @@ function generateStaticScene(rrApp, rrProj, rrhdName, sceneName, ...
 %   rrhdName       : NEW rrhd filename, e.g. "Trees_01.rrhd"
 %   sceneName      : output .rrscene filename
 %   X,Y,Z          : column vectors of positions (meters)
-%   assetPath      : project-relative asset path, e.g. "Assets/Props/Trees/..."
+%   assetPath      : project-relative asset path, e.g. "Assets/Props/trees/CalPalm_Half_Sm02.fbx_rrx"
 %   objectIDPrefix : prefix for object IDs, e.g. "Tree" / "Bldg"
 
     arguments
